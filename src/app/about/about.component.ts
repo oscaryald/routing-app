@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../shared/models/user.model';
-import {users} from '../shared/users';
-import {UsersService} from '../shared/services/users.service';
+
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -13,11 +13,15 @@ export class AboutComponent implements OnInit {
 
     users: User[];
 
-    constructor(private usersServices: UsersService) {
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.usersServices.getUsers().then(users => this.users = users)
+        // this.usersServices.getUsers().then(users => this.users = users)
+
+        this.route.data.forEach((data:{users: User[]}) => {
+            this.users = data.users
+        })
     }
 
 }
